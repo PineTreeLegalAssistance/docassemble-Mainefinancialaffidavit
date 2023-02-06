@@ -1,6 +1,7 @@
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
+  -  ptla_custom_organization.yml
 ---
 metadata:
   title: |
@@ -80,7 +81,7 @@ code: |
   # You can set user_ask_role directly instead to either 'plaintiff' or 'defendant'
   user_ask_role
   Introduction
-  court_superior
+  court_type
   courts[0].address.address
   docket_number
   plaintiffs.gather()
@@ -134,7 +135,7 @@ continue button field: mainefinancialaffidavit_intro
 question: |
   Maine Financial Affidavit
 subquestion: |
-  Use this interview to complete MJB CV-191 Financial Affidavit - a required part of a fee waiver application in Maine.
+  Use this interview to complete MJB CV-191 Financial Affidavit - a required part of a fee waiver application in Maine. You will need to print this form and sign it in front of a court clerk or notary before you can file it with the court.
 ---
 id: Introduction
 question: |
@@ -143,18 +144,20 @@ subquestion: |
   Welcome to the Maine Financial Affidavit form!
 continue button field: Introduction
 ---
-id: Court Info
+id: Court type
 question: |
-  Court Info
-subquestion: |
-  About Your Case
+  What type of court is your case in?
 fields:
-  - "Superior Court": court_superior
-    datatype: yesno
-  - "District Court": court_district
-    datatype: yesno
-  - "Criminal Court": court_criminal
-    datatype: yesno
+  - no label: court_type
+    datatype: radio
+    choices:
+      - District: district
+      - Superior: superior
+      - Criminal: criminal
+---
+id: Court info overflow
+question: |
+fields:
   - "Court town": court_town
     maxlength: 21
   - "Are you using this form with your Application to Proceed Without Payment of Fees (fee waiver)?": support_fee_waiver
@@ -1082,9 +1085,9 @@ attachment:
   fields:
       - "plaintiffs_name": ${ plaintiffs[0] }
       - "plaintiffs1_name": ${ plaintiffs[0] }
-      - "court_superior": ${ court_superior }
-      - "court_district": ${ court_district }
-      - "court_criminal": ${ court_criminal }
+      - "court_superior": ${ court_type == "superior" }
+      - "court_district": ${ court_type == "district" }
+      - "court_criminal": ${ court_type == "criminal" }
       - "court_county": ${ courts[0].address.county }
       - "court_town": ${ court_town }
       - "docket_number": ${ docket_number }
