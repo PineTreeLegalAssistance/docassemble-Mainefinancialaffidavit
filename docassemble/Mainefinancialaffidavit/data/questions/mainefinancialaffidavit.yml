@@ -80,10 +80,13 @@ code: |
   # Below sets the user_role and user_ask_role by asking a question.
   # You can set user_ask_role directly instead to either 'plaintiff' or 'defendant'
   user_ask_role
-  Introduction
+  #Introduction
   court_type
-  courts[0].address.address
+  #courts[0].address.address
   docket_number
+  support_fee_waiver
+  if support_fee_waiver == False:
+    support_other_text  
   plaintiffs.gather()
   set_progress(16)
   defendants.gather()
@@ -95,7 +98,10 @@ code: |
   set_progress(32)
   users[0].mobile_number
   users[0].email
-  user_work_number
+  user_is_employed
+  if user_is_employed == True:
+    employer_name
+  #user_work_number
   user_pay_salary
   user_gets_benefits
   set_progress(48)
@@ -137,16 +143,16 @@ question: |
 subquestion: |
   Use this interview to complete MJB CV-191 Financial Affidavit - a required part of a fee waiver application in Maine. You will need to print this form and sign it in front of a court clerk or notary before you can file it with the court.
 ---
-id: Introduction
-question: |
-  Introduction
-subquestion: |
-  Welcome to the Maine Financial Affidavit form!
-continue button field: Introduction
+#id: Introduction
+#question: |
+#  Introduction
+#subquestion: |
+#  Welcome to the Maine Financial Affidavit form!
+#continue button field: Introduction
 ---
 id: Court type
 question: |
-  What type of court is your case in?
+  What court is your case in?
 fields:
   - no label: court_type
     datatype: radio
@@ -154,31 +160,42 @@ fields:
       - District: district
       - Superior: superior
       - Criminal: criminal
+  - "Which town is the court in?": court_town
+    maxlength: 21
 ---
-id: Court info overflow
+id: Fee waiver support
 question: |
 fields:
-  - "Court town": court_town
-    maxlength: 21
   - "Are you using this form with your Application to Proceed Without Payment of Fees (fee waiver)?": support_fee_waiver
-    datatype: yesno
-  - "Are you using this form for another reason?": support_other
-    datatype: yesno
+    datatype: yesnoradio
+    
+---
+id: Affidavit support
+question: |
+fields:
+#  - "Are you using this form for another reason?": support_other
+#    datatype: yesno
   - "Why are you filing this form with the court?": support_other_text
     maxlength: 78
 ---
-id: About You
+id: Employment Status
+question: |
+fields:
+  - "Are you employed?": user_is_employed
+    datatype: yesnoradio
+---
+id: About Your Employer
 question: |
   About You
 fields:
-  - "Work Telephone": user_work_number
-    datatype: number
-  - "Are you employed?": user_is_employed
-    datatype: yesno
   - "Employer name": employer_name
     maxlength: 49
   - "Employer address": employer_address_on_one_line
     maxlength: 87
+  - "Work Telephone": user_work_number
+    datatype: number
+#  - "Are you employed?": user_is_employed
+#    datatype: yesno
 ---
 id: Employment and Pay
 question: |
