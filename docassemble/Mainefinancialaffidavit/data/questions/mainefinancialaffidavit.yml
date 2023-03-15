@@ -101,8 +101,8 @@ code: |
   user_is_employed
   if user_is_employed == True:
     employer_name
-  #user_work_number
-  user_pay_salary
+    employee_pay
+    user_gross_pay
   user_gets_benefits
   set_progress(48)
   asset_cash_bail
@@ -186,7 +186,7 @@ fields:
 ---
 id: About Your Employer
 question: |
-  About You
+  About Your Employer
 fields:
   - "Employer name": employer_name
     maxlength: 49
@@ -197,14 +197,22 @@ fields:
 #  - "Are you employed?": user_is_employed
 #    datatype: yesno
 ---
+id: Employment Method of Payment
+question: |
+  Are you paid a set salary, or an hourly wage?
+field: employee_pay
+choices:
+  - "I am paid a salary": user_pay_salary
+  - "I am paid an hourly wage": user_pay_wages
+---
 id: Employment and Pay
 question: |
   Employment and Pay
 subquestion: |
   About how you get paid if you are employed
 fields:
-  - "Are you paid a salary?": user_pay_salary
-    datatype: yesno
+#  - "Are you paid a salary?": user_pay_salary
+#    datatype: yesno
   - "What is your gross pay?": user_gross_pay
     datatype: currency
     min: 0
@@ -218,8 +226,8 @@ fields:
     datatype: yesno
   - "Payment schedule": user_salary_paid_other_term
     maxlength: 18
-  - "Are you paid hourly wages?": user_pay_wages
-    datatype: yesno
+#  - "Are you paid hourly wages?": user_pay_wages
+#    datatype: yesno
   - "User hourly wage": user_hourly_wage
     maxlength: 8
   - "User hours worked": user_hours_worked
