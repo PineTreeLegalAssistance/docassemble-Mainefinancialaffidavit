@@ -205,7 +205,14 @@ choices:
   - "I am paid a salary": user_pay_salary
   - "I am paid an hourly wage": user_pay_wages
 ---
-id: Employment and Pay
+mandatory: True
+code: |
+    if employee_pay == user_pay_salary:
+      user_gross_pay
+    else:
+      user_hourly_wage
+---
+id: Employment and Pay Salary
 question: |
   Employment and Pay
 subquestion: |
@@ -228,10 +235,15 @@ fields:
     maxlength: 18
 #  - "Are you paid hourly wages?": user_pay_wages
 #    datatype: yesno
+---
+id: Employment and Pay Wages
+question: |
+  Tell us about the hourly wages you are paid
+fields:
   - "User hourly wage": user_hourly_wage
-    maxlength: 8
+    datatype: currency
   - "User hours worked": user_hours_worked
-    maxlength: 8
+    datatype: number
   - "Weekly hours worked": user_hours_worked_weekly
     datatype: yesno
   - "Biweekly hours worked": user_hours_worked_biweekly
