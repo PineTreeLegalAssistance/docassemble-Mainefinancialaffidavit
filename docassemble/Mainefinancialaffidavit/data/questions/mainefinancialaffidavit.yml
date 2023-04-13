@@ -101,8 +101,11 @@ code: |
   user_is_employed
   if user_is_employed == True:
     employer_name
-    employee_pay
-    user_gross_pay
+    user_pay_wages
+    if user_pay_wages == False:
+      user_salary_paid_weekly
+    else:
+      user_hours_worked
   user_gets_benefits
   set_progress(48)
   asset_cash_bail
@@ -200,29 +203,54 @@ fields:
 id: Employment Method of Payment
 question: |
   Are you paid a set salary, or an hourly wage?
-field: employee_pay
-choices:
-  - "I am paid a salary": user_pay_salary
-  - "I am paid an hourly wage": user_pay_wages
+fields: 
+  - "Are you paid by the hour (an hourly wage)?": user_pay_wages
+    datatype: yesnoradio
+  - "What is your hourly wage?": user_hourly_wage
+    datatype: currency
+    show if: user_pay_wages
+  - "What is your gross pay each pay period?": user_gross_pay
+    datatype: currency 
+    hide if:  user_pay_wages
 ---
-mandatory: True
-code: |
-    if employee_pay == user_pay_salary:
-      user_gross_pay
-    else:
-      user_hourly_wage
+#id: Wages Collection
+############################
+#Trying to troubleshoot getting the variable assignment to go through correctly with the 'user_hours_worked_' pieces. Tried 'type' as I did with courts, but can't quite seem to make it work that way just yet.
+#############################
+#question: |
+#  Tell us about your wages
+#fields:
+#  - "What schedule are you paid on?": user_hours_worked_type
+#    choices:
+#      Weekly: weekly
+#      Every Two Weeks: biweekly
+#      Monthly: monthly
+#      Other: other
+#  - Other Pay Schedule: user_hours_worked_other_term
+#    show if: 
+#      variable: user_hours_worked_type
+#      is: user_hours_worked_other
+#  - How many hours do you work in each pay period?: user_hours_worked
+#    datatype: number
+---
+#mandatory: True
+#code: |
+#    if user_pay_salary == True:
+#      user_gross_pay
+#    else:
+#      user_hourly_wage
 ---
 id: Employment and Pay Salary
 question: |
   Employment and Pay
-subquestion: |
-  About how you get paid if you are employed
-fields:
+fields: 
+#  - "What is your gross pay each pay period?": user_gross_pay
+#    datatype: currency
 #  - "Are you paid a salary?": user_pay_salary
 #    datatype: yesno
-  - "What is your gross pay?": user_gross_pay
-    datatype: currency
-    min: 0
+#  - "What is your gross pay?": user_gross_pay
+#    datatype: currency
+#    min: 0
   - "Paid weekly": user_salary_paid_weekly
     datatype: yesno
   - "Paid biweekly": user_salary_paid_biweekly
@@ -240,10 +268,12 @@ id: Employment and Pay Wages
 question: |
   Tell us about the hourly wages you are paid
 fields:
-  - "User hourly wage": user_hourly_wage
-    datatype: currency
-  - "User hours worked": user_hours_worked
+#  - "User hourly wage": user_hourly_wage
+#    datatype: currency
+  - How many hours do you work in each pay period?: user_hours_worked
     datatype: number
+#  - "User hours worked": user_hours_worked
+#    datatype: number
   - "Weekly hours worked": user_hours_worked_weekly
     datatype: yesno
   - "Biweekly hours worked": user_hours_worked_biweekly
