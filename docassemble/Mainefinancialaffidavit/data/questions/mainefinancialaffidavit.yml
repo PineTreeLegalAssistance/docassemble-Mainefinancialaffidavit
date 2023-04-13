@@ -103,7 +103,7 @@ code: |
     employer_name
     user_pay_wages
     if user_pay_wages == False:
-      user_salary_paid_weekly
+      no_label
     else:
       user_hours_worked
   user_gets_benefits
@@ -240,29 +240,20 @@ fields:
 #    else:
 #      user_hourly_wage
 ---
-id: Employment and Pay Salary
+id: Salary Pay Period
 question: |
-  Employment and Pay
+  What schedule are you paid on?
 fields: 
-#  - "What is your gross pay each pay period?": user_gross_pay
-#    datatype: currency
-#  - "Are you paid a salary?": user_pay_salary
-#    datatype: yesno
-#  - "What is your gross pay?": user_gross_pay
-#    datatype: currency
-#    min: 0
-  - "Paid weekly": user_salary_paid_weekly
-    datatype: yesno
-  - "Paid biweekly": user_salary_paid_biweekly
-    datatype: yesno
-  - "Paid monthly": user_salary_paid_monthly
-    datatype: yesno
-  - "Paid on another schedule": user_salary_paid_other
-    datatype: yesno
-  - "Payment schedule": user_salary_paid_other_term
+  - Pay period: no_label
+    input type: radio
+    choices:
+      - Weekly: user_salary_paid_weekly
+      - Biweekly: user_salary_paid_biweekly
+      - Monthly: user_salary_paid_monthly
+      - Other: user_salary_paid_other
+  - Payment schedule: user_salary_paid_other_term
+    show if: user_salary_paid_other
     maxlength: 18
-#  - "Are you paid hourly wages?": user_pay_wages
-#    datatype: yesno
 ---
 id: Employment and Pay Wages
 question: |
