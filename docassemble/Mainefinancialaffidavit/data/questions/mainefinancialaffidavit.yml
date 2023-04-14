@@ -1145,11 +1145,11 @@ attachment:
   fields:
       - "plaintiffs_name": ${ plaintiffs[0] }
       - "plaintiffs1_name": ${ plaintiffs[0] }
+      - "court_county": ${ courts[0].address.county }
+      - "court_town": ${ court_town }
       - "court_superior": ${ court_type == "superior" }
       - "court_district": ${ court_type == "district" }
       - "court_criminal": ${ court_type == "criminal" }
-      - "court_county": ${ courts[0].address.county }
-      - "court_town": ${ court_town }
       - "docket_number": ${ docket_number }
       - "defendants_name": ${ defendants[0] }
       - "defendants1_name": ${ defendants[0] }
@@ -1168,7 +1168,7 @@ attachment:
       - "employer_address_on_one_line": ${ employer_address_on_one_line }
       - "user_gross_pay": ${ currency(user_gross_pay) }
       - "user_pay_salary": ${ user_pay_salary }
-      - "user_salary_paid_weekly": ${ user_salary_paid_weekly }
+      - "user_salary_paid_weekly": ${ pay_period_salary == "user_salary_paid_weekly" }
       - "user_salary_paid_biweekly": ${ user_salary_paid_biweekly }
       - "user_salary_paid_monthly": ${ user_salary_paid_monthly }
       - "user_salary_paid_other_term": ${ user_salary_paid_other_term }
