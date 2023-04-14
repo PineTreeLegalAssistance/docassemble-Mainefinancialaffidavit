@@ -107,6 +107,9 @@ code: |
     else:
       user_hours_worked
   user_gets_benefits
+  if user_gets_benefits == True:
+    user_benefits_selection
+    benefits_total_value
   set_progress(48)
   asset_cash_bail
   expense_mortgage
@@ -283,24 +286,39 @@ fields:
   - "Do you get any benefits?": user_gets_benefits
     datatype: yesnoradio
 under: |
-  By 'benefits' we mean public benefits like TANF as well as Social Security, Unemployment, and Spousal or child support.
+  By 'benefits' we mean public benefits like TANF as well as Social Security, Unemployment, and spousal or child support.
 ---
 id: Benefits Detail
 question: |
-  Information about benefits, if you get them
+  Information about your benefits
 fields:
-  - "Unemployment": benefits_unemployment
-    datatype: yesno
-  - "Social Security": benefits_social_security
-    datatype: yesno
-  - "TANF": benefits_tanf
-    datatype: yesno
-  - "Spousal or Child Support": benefits_spousal_child_support
-    datatype: yesno
-  - "Other benefits": benefits_other
-    datatype: yesno
-  - "What other benefits?": benefits_other_text
-    maxlength: 78
+  - Which benefits do you get?: user_benefits_selection
+    datatype: checkboxes
+    choices:
+      - Unemployment: benefits_unemployment
+      - Social Security: benefits_social_security
+      - TANF: benefits_tanf
+      - Spousal and/or Child Support: benefits_spousal_child_support
+      - Other: benefits_other
+  - Other Benefits (please list all): benefits_other_text
+    maxlength: 78   
+#  - "Unemployment": benefits_unemployment
+#    datatype: yesno
+#  - "Social Security": benefits_social_security
+#    datatype: yesno
+#  - "TANF": benefits_tanf
+#    datatype: yesno
+#  - "Spousal or Child Support": benefits_spousal_child_support
+#    datatype: yesno
+#  - "Other benefits": benefits_other
+#    datatype: yesno
+#  - "What other benefits?": benefits_other_text
+#    maxlength: 78
+---
+id: Benefits Amounts
+question: |
+   More details about your benefits
+fields:
   - "Benefits total value": benefits_total_value
     datatype: currency
     min: 0
