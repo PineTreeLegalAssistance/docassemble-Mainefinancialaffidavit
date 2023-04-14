@@ -103,7 +103,7 @@ code: |
     employer_name
     user_pay_wages
     if user_pay_wages == False:
-      no_label
+      pay_period_salary
     else:
       user_hours_worked
   user_gets_benefits
@@ -244,7 +244,7 @@ id: Salary Pay Period
 question: |
   What schedule are you paid on?
 fields: 
-  - Pay period: no_label
+  - Pay period: pay_period_salary
     input type: radio
     choices:
       - Weekly: user_salary_paid_weekly
@@ -253,7 +253,7 @@ fields:
       - Other: user_salary_paid_other
   - Payment schedule: user_salary_paid_other_term
     show if: 
-      variable: no_label
+      variable: pay_period_salary
       is: user_salary_paid_other
     maxlength: 18
 ---
