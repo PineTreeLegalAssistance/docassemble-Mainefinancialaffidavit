@@ -1156,7 +1156,7 @@ attachment:
       - "user_name": ${ users[0] }
       - "support_fee_waiver": ${ support_fee_waiver }
       - "support_other_text": ${ support_other_text }
-      - "support_other": ${ support_other }
+      - "support_other": ${ support_fee_waiver == False }
       - "user_address_on_one_line": ${ users[0].address.on_one_line() }
       - "users_birthdate": ${ users[0].birthdate.format() }
       - "user_phone_number": ${ users[0].phone_number }
@@ -1169,10 +1169,10 @@ attachment:
       - "user_gross_pay": ${ currency(user_gross_pay) }
       - "user_pay_salary": ${ user_pay_salary }
       - "user_salary_paid_weekly": ${ pay_period_salary == "user_salary_paid_weekly" }
-      - "user_salary_paid_biweekly": ${ user_salary_paid_biweekly }
-      - "user_salary_paid_monthly": ${ user_salary_paid_monthly }
+      - "user_salary_paid_biweekly": ${ pay_period_salary == "user_salary_paid_biweekly" }
+      - "user_salary_paid_monthly": ${ pay_period_salary == "user_salary_paid_monthly" }
       - "user_salary_paid_other_term": ${ user_salary_paid_other_term }
-      - "user_salary_paid_other": ${ user_salary_paid_other }
+      - "user_salary_paid_other": ${ pay_period_salary == "user_salary_paid_other" }
       - "user_hourly_wage": ${ user_hourly_wage }
       - "user_hours_worked": ${ user_hours_worked }
       - "user_pay_wages": ${ user_pay_wages }
