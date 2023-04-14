@@ -257,35 +257,38 @@ fields:
       is: user_salary_paid_other
     maxlength: 18
 ---
-id: Employment and Pay Wages
+id: Wage Pay Period
 question: |
   Tell us about the hourly wages you are paid
 fields:
-#  - "User hourly wage": user_hourly_wage
-#    datatype: currency
   - How many hours do you work in each pay period?: user_hours_worked
     datatype: number
-#  - "User hours worked": user_hours_worked
-#    datatype: number
-  - "Weekly hours worked": user_hours_worked_weekly
-    datatype: yesno
-  - "Biweekly hours worked": user_hours_worked_biweekly
-    datatype: yesno
-  - "Monthly hours worked": user_hours_worked_monthly
-    datatype: yesno
-  - "Other term hours worked": user_hours_worked_other
-    datatype: yesno
-  - "Other term you worked?": user_hours_worked_other_term
-    maxlength: 19
+  - Pay Period: pay_period_wage
+    input type: radio
+    choices:
+      - Weekly: user_hours_worked_weekly
+      - Biweekly: user_hours_worked_biweekly
+      - Monthly: user_hours_worked_monthly
+      - Other: user_hours_worked_other
+  - Payment schedule: user_hours_worked_other_term
+    show if: 
+      variable: pay_period_wage
+      is: user_hours_worked_other
+    maxlength: 18
 ---
 id: Benefits
 question: |
   Benefits
-subquestion: |
-  Information about benefits, if you get them
 fields:
   - "Do you get any benefits?": user_gets_benefits
-    datatype: yesno
+    datatype: yesnoradio
+under: |
+  By 'benefits' we mean public benefits like TANF as well as Social Security, Unemployment, and Spousal or child support.
+---
+id: Benefits Detail
+question: |
+  Information about benefits, if you get them
+fields:
   - "Unemployment": benefits_unemployment
     datatype: yesno
   - "Social Security": benefits_social_security
@@ -1176,11 +1179,11 @@ attachment:
       - "user_hourly_wage": ${ user_hourly_wage }
       - "user_hours_worked": ${ user_hours_worked }
       - "user_pay_wages": ${ user_pay_wages }
-      - "user_hours_worked_weekly": ${ user_hours_worked_weekly }
-      - "user_hours_worked_biweekly": ${ user_hours_worked_biweekly }
-      - "user_hours_worked_monthly": ${ user_hours_worked_monthly }
+      - "user_hours_worked_weekly": ${ pay_period_wage == "user_hours_worked_weekly" }
+      - "user_hours_worked_biweekly": ${ pay_period_wage == "user_hours_worked_biweekly" }
+      - "user_hours_worked_monthly": ${ pay_period_wage == "user_hours_worked_monthly" }
       - "user_hours_worked_other_term": ${ user_hours_worked_other_term }
-      - "user_hours_worked_other": ${ user_hours_worked_other }
+      - "user_hours_worked_other": ${ pay_period_wage == "user_hours_worked_other" }
       - "user_gets_benefits": ${ user_gets_benefits }
       - "benefits_unemployment": ${ benefits_unemployment }
       - "benefits_social_security": ${ benefits_social_security }
