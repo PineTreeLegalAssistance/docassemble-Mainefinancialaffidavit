@@ -425,60 +425,72 @@ subquestion: |
   About regular costs you may have to pay
 fields:
   - "Do you pay a mortgage?": expense_mortgage
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly mortgage amount": expense_mortgage_amount
+    show if: expense_mortgage
     datatype: currency
     min: 0
   - "Do you pay rent?": expense_rent
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly rent amount": expense_rent_amount
+    show if: expense_rent
     datatype: currency
     min: 0
   - "Do you pay child support?": expense_child_support
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly child support amount": expense_child_support_amount
+    show if: expense_child_support
     datatype: currency
     min: 0
   - "Do you pay utilities?": expense_utilities
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly utilities amount": expense_utilities_amount
+    show if: expense_utilities
     datatype: currency
     min: 0
   - "Food costs?": expense_food
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly food costs": expense_food_amount
+    show if: expense_food
     datatype: currency
     min: 0
   - "Cable costs?": expense_cable
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly cable costs": expense_cable_amount
+    show if: expense_cable
     datatype: currency
     min: 0
   - "Credit card payments?": expense_credit_card
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly credit card payments": expense_credit_card_amount
+    show if: expense_credit_card
     datatype: currency
     min: 0
   - "Loan payments?": expense_loans
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly loan payments": expense_loans_amount
+    show if: expense_loans
     datatype: currency
     min: 0
   - "Heating costs?": expense_heat
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly heating costs": expense_heat_amount
+    show if: expense_heat
     datatype: currency
     min: 0
   - "Cell phone costs?": expense_cell_phone
-    datatype: yesno
+    datatype: yesnoradio
   - "Monthly cell phone costs": expense_cell_phone_amount
+    show if: expense_cell_phone
     datatype: currency
     min: 0
   - "Other expenses?": expense_other
-    datatype: yesno
+    datatype: yesnoradio
   - "What other expenses do you have?": expense_other_text
+    show if: expense_other
     maxlength: 19
   - "What is the monthly amount of any other expenses you have?": expense_other_amount
+    show if: expense_other
     datatype: currency
     min: 0
 ---
@@ -489,9 +501,12 @@ subquestion: |
   About who you live with and how you share expenses
 fields:
   - "Do you live alone?": user_lives_alone
-    datatype: yesno
+    datatype: yesnoradio
   - "Do any children live with you?": children_live_with_user
-    datatype: yesno
+    show if: 
+      variable: user_lives_alone
+      is: False
+    datatype: yesnoradio
   - "How many children live with you?": number_children_live_with_user
     datatype: integer
     min: 0
