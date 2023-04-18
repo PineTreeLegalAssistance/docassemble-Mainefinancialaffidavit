@@ -111,7 +111,8 @@ code: |
     user_benefits_selection
     benefits_total_value
   set_progress(48)
-  asset_cash_bail
+  asset_cash_on_hand
+  asset_user_owns_house
   expense_mortgage
   user_lives_alone
   user_pays_child_support
@@ -340,58 +341,80 @@ fields:
 ---
 id: Assets
 question: |
-  Assets
+  Assets - Cash
 subquestion: |
-  About valuable things you may own
+  Questions about your finances and belongings
 fields:
-  - "Cash Bail you have paid in this case": asset_cash_bail
-    datatype: yesno
-  - "Amount of cash bail you paid in this case": asset_cash_bail_amount
-    datatype: currency
-    min: 0
   - "Do you have any cash on hand?": asset_cash_on_hand
-    datatype: yesno
+    datatype: yesnoradio
   - "How much cash on hand?": asset_cash_on_hand_amount
+    show if: asset_cash_on_hand
     datatype: currency
     min: 0
   - "Do you have any money in the bank?": asset_cash_in_bank
-    datatype: yesno
+    datatype: yesnoradio
   - "How much money in the bank?": asset_cash_in_bank_amount
+    show if: asset_cash_in_bank
     datatype: currency
     min: 0
   - "Does anyone owe you money?": asset_owed_money
-    datatype: yesno
+    datatype: yesnoradio
   - "How much money are you owed?": asset_owed_money_amount
+    show if: asset_owed_money
     datatype: currency
     min: 0
+#  - "Cash Bail you have paid in this case": asset_cash_bail
+#    show if:
+#      variable: court_type
+#      is: "criminal"
+#    datatype: yesnoradio
+#  - "Amount of cash bail you paid in this case": asset_cash_bail_amount
+#    show if: asset_cash_bail
+#    datatype: currency
+#    min: 0
+# The code commented out above is causing the interview to not progress - plan to troubleshoot this issue down the line.
+---    
+id: Assets Continued
+question: |
+  Assets - Property
+subquestion: |
+  Questions about your finances and belongings
+fields:    
   - "Do you own a house?": asset_user_owns_house
-    datatype: yesno
+    datatype: yesnoradio
   - "What is the value of the house you own?": asset_user_owns_house_value
+    show if: asset_user_owns_house
     datatype: currency
     min: 0
   - "How much do you still owe on the house?": asset_user_owns_house_amount_owed
+    show if: asset_user_owns_house
     datatype: currency
     min: 0
   - "Do you own a vehicle?": asset_user_owns_vehicle
-    datatype: yesno
+    datatype: yesnoradio
   - "How much is the vehicle worth?": asset_user_owns_vehicle_value
+    show if: asset_user_owns_vehicle
     datatype: currency
     min: 0
   - "Do you own any recreational vehicles (like boats or ATVs)?": asset_user_owns_recreational_vehicle
-    datatype: yesno
+    datatype: yesnoradio
   - "How much are any recreational vehicles you own worth?": asset_user_owns_recreational_vehicle_value
+    show if: asset_user_owns_recreational_vehicle
     datatype: currency
     min: 0
   - "Do you own stocks?": asset_user_owns_stocks
-    datatype: yesno
+    datatype: yesnoradio
   - "How much are your stocks worth?": asset_user_owns_stocks_value
+    show if: asset_user_owns_stocks
     datatype: currency
     min: 0
   - "Do you have any other valuables worth $250 or more?": asset_user_owns_other
-    datatype: yesno
+    datatype: yesnoradio
   - "What other valuables do you have?": asset_user_owns_other_text
+    show if: asset_user_owns_other
     maxlength: 33
   - "How much are those other valuables worth?": asset_user_owns_other_value
+    show if: asset_user_owns_other
     datatype: currency
     min: 0
 ---
