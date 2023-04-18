@@ -1206,11 +1206,11 @@ attachment:
       - "user_hours_worked_other_term": ${ user_hours_worked_other_term }
       - "user_hours_worked_other": ${ pay_period_wage == "user_hours_worked_other" }
       - "user_gets_benefits": ${ user_gets_benefits }
-      - "benefits_unemployment": ${ user_benefits_selection == "benefits_unemployment" }
-      - "benefits_social_security": ${ user_benefits_selection == "benefits_social_security" }
-      - "benefits_tanf": ${ user_benefits_selection == "benefits_tanf" }
-      - "benefits_spousal_child_support": ${ user_benefits_selection == "benefits_spousal_child_support" }
-      - "benefits_other": ${ user_benefits_selection == "benefits_other" }
+      - "benefits_unemployment": ${ user_benefits_selection["benefits_unemployment"] == True }
+      - "benefits_social_security": ${ user_benefits_selection["benefits_social_security"] == True }
+      - "benefits_tanf": ${ user_benefits_selection["benefits_tanf"] == True }
+      - "benefits_spousal_child_support": ${ user_benefits_selection["benefits_spousal_child_support"] == True }
+      - "benefits_other": ${ user_benefits_selection["benefits_other"] == True }
       - "benefits_other_text": ${ benefits_other_text }
       - "benefits_total_value": ${ currency(benefits_total_value) }
       - "benefits_time_weekly": ${ benefits_time_weekly }
