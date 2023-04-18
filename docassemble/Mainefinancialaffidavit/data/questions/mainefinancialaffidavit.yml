@@ -322,19 +322,21 @@ id: Benefits Amounts
 question: |
    More details about your benefits
 fields:
-  - "Benefits total value": benefits_total_value
+  - What is the total dollar amount of all the benefits you get?: benefits_total_value
     datatype: currency
     min: 0
-  - "I get this amount in benefits weekly": benefits_time_weekly
-    datatype: yesno
-  - "I get this amount in benefits biweekly": benefits_time_biweekly
-    datatype: yesno
-  - "I get this amount in benefits monthly": benefits_time_monthly
-    datatype: yesno
-  - "I get this amount in benefits on another schedule": benefits_time_other
-    datatype: yesno
-  - "I get these benefits on this schedule": benefits_time_other_term
-    maxlength: 26
+  - How often do you get these benefits?: user_benefits_schedule
+    input type: radio
+    choices:
+      - I get this amount in benefits weekly: benefits_time_weekly
+      - I get this amount in benefits biweekly (every two weeks): benefits_time_biweekly
+      - I get this amount in benefits monthly: benefits_time_monthly
+      - I get this amount in benefits on another schedule: benefits_time_other
+  - How often do you get these benefits?: benefits_time_other_term
+    show if: 
+      variable: user_benefits_schedule
+      is: benefits_time_other
+    maxlength: 18
 ---
 id: Assets
 question: |
@@ -1213,10 +1215,10 @@ attachment:
       - "benefits_other": ${ user_benefits_selection["benefits_other"] == True }
       - "benefits_other_text": ${ benefits_other_text }
       - "benefits_total_value": ${ currency(benefits_total_value) }
-      - "benefits_time_weekly": ${ benefits_time_weekly }
-      - "benefits_time_biweekly": ${ benefits_time_biweekly }
-      - "benefits_time_monthly": ${ benefits_time_monthly }
-      - "benefits_time_other": ${ benefits_time_other }
+      - "benefits_time_weekly": ${ user_benefits_schedule == "benefits_time_weekly" }
+      - "benefits_time_biweekly": ${ user_benefits_schedule == "benefits_time_biweekly" }
+      - "benefits_time_monthly": ${ user_benefits_schedule == "benefits_time_monthly" }
+      - "benefits_time_other": ${ user_benefits_schedule == "benefits_time_other" }
       - "benefits_time_other_term": ${ benefits_time_other_term }
       - "asset_cash_bail": ${ asset_cash_bail }
       - "asset_cash_bail_amount": ${ currency(asset_cash_bail_amount) }
