@@ -115,7 +115,8 @@ code: |
   asset_user_owns_house
   expense_mortgage
   user_lives_alone
-  user_pays_child_support
+  if user_lives_alone == False and user_household_children_plus_adults == True:
+    user_shares_living_expenses
   acknowledge_form_terms
   set_progress(64)
   signature_date
@@ -494,11 +495,11 @@ fields:
     datatype: currency
     min: 0
 ---
-id: Living Situation
+id: Living Situation Children
 question: |
   Living Situation
 subquestion: |
-  About who you live with and how you share expenses
+  About who you live with
 fields:
   - "Do you live alone?": user_lives_alone
     datatype: yesnoradio
@@ -513,18 +514,43 @@ fields:
     show if:
       variable: children_live_with_user
       is: True
-  - "Do you live with anyone?": user_lives_with_someone
-    datatype: yesno
-  - "Lives with spouse": user_lives_with_spouse
-    datatype: yesno
-  - "Lives with friend": user_lives_with_friend
-    datatype: yesno
-  - "Lives with parent(s)": user_lives_with_parent
-    datatype: yesno
-  - "Lives with others": user_lives_with_other
-    datatype: yesno
-  - "Who do you live with?": user_lives_with_other_text
+  - "Do you live with any other adults?": user_household_children_plus_adults
+    datatype: yesnoradio 
+    show if:
+      variable: user_lives_alone
+      is: False
+  - "Who do you live with?": user_housemate_selection
+    datatype: checkboxes
+    choices:
+      - Spouse: user_lives_with_spouse
+      - A friend: user_lives_with_friend
+      - Your parent(s): user_lives_with_parent
+      - Another person or people: user_lives_with_other
+    show if: user_household_children_plus_adults  
+  - "Who do you live with? (How are you related, i.e. 'roommate,' 'grandparent,' or 'dating partner')": user_lives_with_other_text  
+    show if: 
+      variable: user_housemate_selection["user_lives_with_other"]
+      is: True
     maxlength: 24
+---
+id: Living Expenses
+question: |
+  Living Situation
+subquestion: |
+  About who you live with and how you share expenses
+fields:  
+#  - "Do you live with anyone?": user_lives_with_someone
+#    datatype: yesno
+#  - "Lives with spouse": user_lives_with_spouse
+#    datatype: yesno
+#  - "Lives with friend": user_lives_with_friend
+#    datatype: yesno
+#  - "Lives with parent(s)": user_lives_with_parent
+#    datatype: yesno
+#  - "Lives with others": user_lives_with_other
+#    datatype: yesno
+#  - "Who do you live with?": user_lives_with_other_text
+#    maxlength: 24
   - "Do you share living expenses with those you live with?": user_shares_living_expenses
     datatype: yesno
   - "How much do others contribute to your shared living expenses?": shared_living_expenses_amount
@@ -1315,11 +1341,11 @@ attachment:
       - "child_support_paid_monthly": ${ child_support_paid_monthly }
       - "child_support_paid_other_schedule": ${ child_support_paid_other_schedule }
       - "user_lives_alone": ${ user_lives_alone }
-      - "user_lives_with_someone": ${ user_lives_with_someone }
-      - "user_lives_with_spouse": ${ user_lives_with_spouse }
-      - "user_lives_with_friend": ${ user_lives_with_friend }
-      - "user_lives_with_parent": ${ user_lives_with_parent }
-      - "user_lives_with_other": ${ user_lives_with_other }
+      - "user_lives_with_someone": ${ user_lives_alone == False or user_household_children_plus_adults == True }
+      - "user_lives_with_spouse": ${ user_housemate_selection["user_lives_with_spouse"] == True }
+      - "user_lives_with_friend": ${ user_housemate_selection["user_lives_with_friend"] == True }
+      - "user_lives_with_parent": ${ user_housemate_selection["user_lives_with_parent"] == True }
+      - "user_lives_with_other": ${ user_housemate_selection["user_lives_with_other"] }
       - "user_lives_with_other_text": ${ user_lives_with_other_text }
       - "shared_living_expenses_amount": ${ currency(shared_living_expenses_amount) }
       - "user_shares_living_expenses": ${ user_shares_living_expenses }
