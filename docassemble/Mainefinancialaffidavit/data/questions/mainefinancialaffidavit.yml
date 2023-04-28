@@ -510,6 +510,9 @@ fields:
   - "How many children live with you?": number_children_live_with_user
     datatype: integer
     min: 0
+    show if:
+      variable: children_live_with_user
+      is: True
   - "Do you live with anyone?": user_lives_with_someone
     datatype: yesno
   - "Lives with spouse": user_lives_with_spouse
