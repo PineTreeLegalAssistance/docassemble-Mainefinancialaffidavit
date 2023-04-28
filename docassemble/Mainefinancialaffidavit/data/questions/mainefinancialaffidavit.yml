@@ -552,20 +552,34 @@ fields:
 #  - "Who do you live with?": user_lives_with_other_text
 #    maxlength: 24
   - "Do you share living expenses with those you live with?": user_shares_living_expenses
-    datatype: yesno
+    datatype: yesnoradio
   - "How much do others contribute to your shared living expenses?": shared_living_expenses_amount
     datatype: currency
     min: 0
-  - "They contribute to expenses weekly": shared_living_expenses_weekly
-    datatype: yesno
-  - "They contribute to expenses biweekly": shared_living_expenses_biweekly
-    datatype: yesno
-  - "They contribute to expenses monthly": shared_living_expenses_monthly
-    datatype: yesno
-  - "They contribute to expenses on  another schedule": shared_living_expenses_other
-    datatype: yesno
+    show if: user_shares_living_expenses
+  - "How often do they contribute this amount?": shared_living_expenses_schedule
+    input type: radio
+    choices:
+      - Weekly: shared_living_expenses_weekly
+      - Every two weeks (biweekly): shared_living_expenses_biweekly
+      - Monthly: shared_living_expenses_monthly
+      - Another schedule: shared_living_expenses_other
+    show if: user_shares_living_expenses
   - "What other schedule do you use for sharing living expenses?": shared_living_expenses_other_term
     maxlength: 47
+    show if: 
+      variable: shared_living_expenses_schedule
+      is: shared_living_expenses_other
+#  - "They contribute to expenses weekly": shared_living_expenses_weekly
+#    datatype: yesno
+#  - "They contribute to expenses biweekly": shared_living_expenses_biweekly
+#    datatype: yesno
+#  - "They contribute to expenses monthly": shared_living_expenses_monthly
+#    datatype: yesno
+#  - "They contribute to expenses on  another schedule": shared_living_expenses_other
+#    datatype: yesno
+#  - "What other schedule do you use for sharing living expenses?": shared_living_expenses_other_term
+#    maxlength: 47
 ---
 id: Child Support
 question: |
@@ -1350,10 +1364,10 @@ attachment:
       - "shared_living_expenses_amount": ${ currency(shared_living_expenses_amount) }
       - "user_shares_living_expenses": ${ user_shares_living_expenses }
       - "shared_living_expenses_other_term": ${ shared_living_expenses_other_term }
-      - "shared_living_expenses_weekly": ${ shared_living_expenses_weekly }
-      - "shared_living_expenses_biweekly": ${ shared_living_expenses_biweekly }
-      - "shared_living_expenses_monthly": ${ shared_living_expenses_monthly }
-      - "shared_living_expenses_other": ${ shared_living_expenses_other }
+      - "shared_living_expenses_weekly": ${ shared_living_expenses_schedule == "shared_living_expenses_weekly" }
+      - "shared_living_expenses_biweekly": ${ shared_living_expenses_schedule == "shared_living_expenses_biweekly" }
+      - "shared_living_expenses_monthly": ${ shared_living_expenses_schedule == "shared_living_expenses_monthly" }
+      - "shared_living_expenses_other": ${ shared_living_expenses_schedule == "shared_living_expenses_other" }
       - "acknowledge_form_terms": ${ acknowledge_form_terms }
       - "truthfulness_check": ${ truthfulness_check }
       - "signature_date": ${ signature_date }
