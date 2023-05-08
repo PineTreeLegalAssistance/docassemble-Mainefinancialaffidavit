@@ -114,6 +114,8 @@ code: |
   asset_cash_on_hand
   asset_user_owns_house
   expense_mortgage
+  if expense_child_support == True:
+    user_pays_child_support_for_number_of_children
   user_lives_alone
   if user_lives_alone == False and user_household_children_plus_adults == True:
     user_shares_living_expenses
@@ -587,24 +589,34 @@ question: |
 subquestion: |
   About any child support you may pay
 fields:
-  - "Do you pay child support?": user_pays_child_support
-    datatype: yesno
+#  - "Do you pay child support?": user_pays_child_support
+#    datatype: yesno
   - "How many children do you pay child support for?": user_pays_child_support_for_number_of_children
     datatype: integer
     min: 0
   - "How much child support do you pay?": user_pays_child_support_amount
     datatype: currency
     min: 0
-  - "Child support paid weekly": child_support_paid_weekly
-    datatype: yesno
-  - "Child support paid biweekly": child_support_paid_biweekly
-    datatype: yesno
-  - "Child support paid monthly": child_support_paid_monthly
-    datatype: yesno
-  - "Child support paid on another schedule": child_support_paid_other_schedule
-    datatype: yesno
+  - "How often do you pay this amount in child support?": child_support_schedule
+    input type: radio
+    choices:
+      - Weekly: child_support_paid_weekly
+      - Every two weeks (biweekly): child_support_paid_biweekly
+      - Monthly: child_support_paid_monthly
+      - A different schedule: child_support_paid_other_schedule 
+#  - "Child support paid weekly": child_support_paid_weekly
+#    datatype: yesno
+#  - "Child support paid biweekly": child_support_paid_biweekly
+#    datatype: yesno
+#  - "Child support paid monthly": child_support_paid_monthly
+#    datatype: yesno
+#  - "Child support paid on another schedule": child_support_paid_other_schedule
+#    datatype: yesno
   - "What other schedule do you pay your child support on?": child_support_paid_other_schedule_term
     maxlength: 47
+    show if: 
+      variable: child_support_schedule
+      is: child_support_paid_other_schedule
 ---
 id: Understanding this form
 question: |
@@ -1348,12 +1360,12 @@ attachment:
       - "children_live_with_user": ${ children_live_with_user }
       - "user_pays_child_support_for_number_of_children": ${ user_pays_child_support_for_number_of_children }
       - "user_pays_child_support_amount": ${ currency(user_pays_child_support_amount) }
-      - "user_pays_child_support": ${ user_pays_child_support }
+      - "user_pays_child_support": ${ expense_child_support }
       - "child_support_paid_other_schedule_term": ${ child_support_paid_other_schedule_term }
-      - "child_support_paid_weekly": ${ child_support_paid_weekly }
-      - "child_support_paid_biweekly": ${ child_support_paid_biweekly }
-      - "child_support_paid_monthly": ${ child_support_paid_monthly }
-      - "child_support_paid_other_schedule": ${ child_support_paid_other_schedule }
+      - "child_support_paid_weekly": ${ child_support_schedule == "child_support_paid_weekly" }
+      - "child_support_paid_biweekly": ${ child_support_schedule == "child_support_paid_biweekly" }
+      - "child_support_paid_monthly": ${ child_support_schedule == "child_support_paid_monthly" }
+      - "child_support_paid_other_schedule": ${ child_support_schedule == "child_support_paid_other_schedule" }
       - "user_lives_alone": ${ user_lives_alone }
       - "user_lives_with_someone": ${ user_lives_alone == False or user_household_children_plus_adults == True }
       - "user_lives_with_spouse": ${ user_housemate_selection["user_lives_with_spouse"] == True }
