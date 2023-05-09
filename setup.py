@@ -46,7 +46,7 @@ def find_package_data(where='.', package='', exclude=standard_exclude, exclude_d
 setup(name='docassemble.Mainefinancialaffidavit',
       version='1.0',
       description=('Maine Financial Affidavit'),
-      long_description='# docassemble.Mainefinancialaffidavit\r\n\r\nMaine Financial Affidavit\r\n\r\n## Author\r\n\r\nJack Haycock\r\n\r\n',
+      long_description='# docassemble.Mainefinancialaffidavit\r\n\r\nMaine Financial Affidavit TEST BUILD\r\n\r\n## Author\r\n\r\nJack Haycock\r\n\r\n',
       long_description_content_type='text/markdown',
       author='Jack Haycock',
       author_email='jhaycock@ptla.org',
