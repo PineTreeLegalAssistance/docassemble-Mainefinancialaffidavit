@@ -1,7 +1,7 @@
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
-  -  ptla_custom_organization.yml
+  - ptla_custom_organization.yml
 ---
 metadata:
   title: |
@@ -309,18 +309,6 @@ fields:
       variable: user_benefits_selection["benefits_other"]
       is: True
     maxlength: 78   
-#  - "Unemployment": benefits_unemployment
-#    datatype: yesno
-#  - "Social Security": benefits_social_security
-#    datatype: yesno
-#  - "TANF": benefits_tanf
-#    datatype: yesno
-#  - "Spousal or Child Support": benefits_spousal_child_support
-#    datatype: yesno
-#  - "Other benefits": benefits_other
-#    datatype: yesno
-#  - "What other benefits?": benefits_other_text
-#    maxlength: 78
 ---
 id: Benefits Amounts
 question: |
@@ -445,6 +433,9 @@ fields:
     show if: expense_child_support
     datatype: currency
     min: 0
+    help: |  
+      Please enter the total amount of child support you pay each month, for all children combined. We will ask for more details later in this interview.
+#The way to more eleganty handle this child support question may be to have the 'Do you pay' question trigger the  child support details screen - and then calculate the monthly child support amount for the 'expense_child_support_amount' field - that way we only have to ask the user for how much and how often they pay, and not to have to try to reconcile the monthly/by period math all on their own.      
   - "Do you pay utilities?": expense_utilities
     datatype: yesnoradio
   - "Monthly utilities amount": expense_utilities_amount
@@ -521,6 +512,7 @@ fields:
     show if:
       variable: user_lives_alone
       is: False
+#Early bug hunting: As written, someone could say they don't live alone, but also don't live with any children, or adults. It doesn't break the interview, but it does create a result that probably is not accurate capturing that person's situation - or it just leaves room for error/mis-click where there doesn't need to be. Could this be addressed by making one or both of the fields go through some kind of check and throwing a message of 'You said you don't live alone, but also said you do not live with any adults or children.' Not sure the best way to handle this one.
   - "Who do you live with?": user_housemate_selection
     datatype: checkboxes
     choices:
@@ -541,18 +533,6 @@ question: |
 subquestion: |
   About who you live with and how you share expenses
 fields:  
-#  - "Do you live with anyone?": user_lives_with_someone
-#    datatype: yesno
-#  - "Lives with spouse": user_lives_with_spouse
-#    datatype: yesno
-#  - "Lives with friend": user_lives_with_friend
-#    datatype: yesno
-#  - "Lives with parent(s)": user_lives_with_parent
-#    datatype: yesno
-#  - "Lives with others": user_lives_with_other
-#    datatype: yesno
-#  - "Who do you live with?": user_lives_with_other_text
-#    maxlength: 24
   - "Do you share living expenses with those you live with?": user_shares_living_expenses
     datatype: yesnoradio
   - "How much do others contribute to your shared living expenses?": shared_living_expenses_amount
@@ -572,16 +552,6 @@ fields:
     show if: 
       variable: shared_living_expenses_schedule
       is: shared_living_expenses_other
-#  - "They contribute to expenses weekly": shared_living_expenses_weekly
-#    datatype: yesno
-#  - "They contribute to expenses biweekly": shared_living_expenses_biweekly
-#    datatype: yesno
-#  - "They contribute to expenses monthly": shared_living_expenses_monthly
-#    datatype: yesno
-#  - "They contribute to expenses on  another schedule": shared_living_expenses_other
-#    datatype: yesno
-#  - "What other schedule do you use for sharing living expenses?": shared_living_expenses_other_term
-#    maxlength: 47
 ---
 id: Child Support
 question: |
@@ -594,7 +564,7 @@ fields:
   - "How many children do you pay child support for?": user_pays_child_support_for_number_of_children
     datatype: integer
     min: 0
-  - "How much child support do you pay?": user_pays_child_support_amount
+  - "How much child support do you pay in total?": user_pays_child_support_amount
     datatype: currency
     min: 0
   - "How often do you pay this amount in child support?": child_support_schedule
@@ -604,14 +574,6 @@ fields:
       - Every two weeks (biweekly): child_support_paid_biweekly
       - Monthly: child_support_paid_monthly
       - A different schedule: child_support_paid_other_schedule 
-#  - "Child support paid weekly": child_support_paid_weekly
-#    datatype: yesno
-#  - "Child support paid biweekly": child_support_paid_biweekly
-#    datatype: yesno
-#  - "Child support paid monthly": child_support_paid_monthly
-#    datatype: yesno
-#  - "Child support paid on another schedule": child_support_paid_other_schedule
-#    datatype: yesno
   - "What other schedule do you pay your child support on?": child_support_paid_other_schedule_term
     maxlength: 47
     show if: 
