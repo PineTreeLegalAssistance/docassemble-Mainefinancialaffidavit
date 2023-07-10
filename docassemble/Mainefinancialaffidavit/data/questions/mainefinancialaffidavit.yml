@@ -82,6 +82,8 @@ code: |
   user_ask_role
   #Introduction
   court_type
+  court_county
+  court_town
   #courts[0].address.address
   docket_number
   support_fee_waiver
@@ -170,8 +172,34 @@ fields:
       - District: district
       - Superior: superior
       - Criminal: criminal
-  - "Which town is the court in?": court_town
-    maxlength: 21
+---
+id: Court location county
+question: |
+ What is the name of the Maine county where the court is located?:
+field: court_county
+dropdown: 
+  - "Androscoggin"
+  - "Aroostook"
+  - "Cumberland"
+  - "Franklin"
+  - "Hancock"
+  - "Kennebec"
+  - "Knox"
+  - "Lincoln"
+  - "Oxford"
+  - "Penobscot"
+  - "Piscataquis" 
+  - "Sagadahaoc"
+  - "Somerset"
+  - "Waldo"
+  - "Washington"
+  - "York"
+---
+id: Court location town
+question: |
+fields:
+ - "Which town is the court in?": court_town
+   maxlength: 21
 ---
 id: Fee waiver support
 question: |
@@ -1226,7 +1254,7 @@ attachment:
   fields:
       - "plaintiffs_name": ${ plaintiffs[0] }
       - "plaintiffs1_name": ${ plaintiffs[0] }
-      - "court_county": ${ courts[0].address.county }
+      - "court_county": ${ court_county }
       - "court_town": ${ court_town }
       - "court_superior": ${ court_type == "superior" }
       - "court_district": ${ court_type == "district" }
