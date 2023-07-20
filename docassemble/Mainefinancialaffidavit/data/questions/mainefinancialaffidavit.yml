@@ -1253,7 +1253,7 @@ attachment:
   pdf template file: mainefinancialaffidavit.pdf
   fields:
       - "plaintiffs_name": ${ plaintiffs[0] }
-      - "plaintiffs1_name": ${ plaintiffs[0] }
+      - "plaintiffs1_name": ${ plaintiffs[1] }
       - "court_county": ${ court_county }
       - "court_town": ${ court_town }
       - "court_superior": ${ court_type == "superior" }
@@ -1261,7 +1261,7 @@ attachment:
       - "court_criminal": ${ court_type == "criminal" }
       - "docket_number": ${ docket_number }
       - "defendants_name": ${ defendants[0] }
-      - "defendants1_name": ${ defendants[0] }
+      - "defendants1_name": ${ defendants[1] }
       - "user_name": ${ users[0] }
       - "support_fee_waiver": ${ support_fee_waiver }
       - "support_other_text": ${ support_other_text }
