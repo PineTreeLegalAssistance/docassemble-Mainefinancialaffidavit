@@ -65,6 +65,7 @@ code: |
 ---
 objects:
   - users: ALPeopleList.using(ask_number=True,target_number=1)
+  - court_list: ALCourtLoader.using(file_name='ptlacourtaddresstest.xlsx')
 ---
 sections:
   - review_mainefinancialaffidavit: Review your answers
@@ -81,7 +82,7 @@ code: |
   # You can set user_ask_role directly instead to either 'plaintiff' or 'defendant'
   user_ask_role
   #Introduction
-  court_type
+  #court_type
   court_county
   court_town
   #courts[0].address.address
@@ -125,12 +126,13 @@ code: |
   set_progress(64)
   signature_date
   interview_order_mainefinancialaffidavit = True
+  financial_affidavit_done = True
 ---
 ###################### Main order ######################
 comment: |
   This block includes the logic for standalone interviews.
   Delete mandatory: True to include in another interview
-mandatory: True
+#mandatory: True
 code: |
   al_intro_screen
   mainefinancialaffidavit_intro
@@ -175,31 +177,41 @@ fields:
 ---
 id: Court location county
 question: |
- What is the name of the Maine county where the court is located?:
-field: court_county
-dropdown: 
-  - "Androscoggin"
-  - "Aroostook"
-  - "Cumberland"
-  - "Franklin"
-  - "Hancock"
-  - "Kennebec"
-  - "Knox"
-  - "Lincoln"
-  - "Oxford"
-  - "Penobscot"
-  - "Piscataquis" 
-  - "Sagadahaoc"
-  - "Somerset"
-  - "Waldo"
-  - "Washington"
-  - "York"
+  What is the name of the Maine county where the court is located?
+fields:
+  - County: court_county
+    code: court_list._load_courts()["address_county"].unique()  
+#question: |
+# What is the name of the Maine county where the court is located?:
+#field: court_county
+#dropdown: 
+#  - "Androscoggin"
+#  - "Aroostook"
+#  - "Cumberland"
+#  - "Franklin"
+# - "Hancock"
+#  - "Kennebec"
+#  - "Knox"
+#  - "Lincoln"
+#  - "Oxford"
+#  - "Penobscot"
+#  - "Piscataquis" 
+#  - "Sagadahaoc"
+#  - "Somerset"
+#  - "Waldo"
+#  - "Washington"
+#  - "York"
 ---
 id: Court location town
 question: |
-fields:
- - "Which town is the court in?": court_town
-   maxlength: 21
+fields:  
+  - What is the name of the town where the court is located?: court_town
+    code: court_list._load_courts()["address_town"].unique()
+    #maxlength: 21
+#question: |
+#fields:
+# - "Which town is the court in?": court_town
+#   maxlength: 21
 ---
 id: Fee waiver support
 question: |
