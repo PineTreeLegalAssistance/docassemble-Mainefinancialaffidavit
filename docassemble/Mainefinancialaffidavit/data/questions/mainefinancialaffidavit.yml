@@ -622,14 +622,18 @@ fields:
 ---
 id: Understanding this form
 question: |
-  Understanding this form
+  Understanding the Financial Affidavit 
 subquestion: |
-  Important information about what this form means and what you are agreeing to when you sign it and file it with the court.
+  The Financial Affidavit (CV-191) requires a notarized signature - this means a signature witnessed by a notary public, like a court clerk. On this screen, please read and understand what you are agreeing to with the court by filing this form. Check the boxes above each statement to show that you understand.
 fields:
-  - "Acknowledge form terms": acknowledge_form_terms
+  - "I understand and agree to the Financial Affidavit form terms": acknowledge_form_terms
     datatype: yesno
-  - "Truthfulness check - is all this true or else perjury?": truthfulness_check
+  - note: |
+      I have read the above form, I understand it, and the answers to the questions are true. I understand and agree that further investigation may be conducted, if necessary, to verify the information that I have provided. I also understand that I have a continuing obligation, personally and through counsel, to report to the court any changes in my employment or other financial circumstances.
+  - "I understand and swear that the statements on my Financial Affidavit are true and correct": truthfulness_check
     datatype: yesno
+  - note: |
+      I swear under penalty of perjury that the above statements are true and correct. I understand that these statements are made for use as evidence in court and that I am subject to prosecution for perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false information to the court.
 ---
 id: preview mainefinancialaffidavit
 question: |
