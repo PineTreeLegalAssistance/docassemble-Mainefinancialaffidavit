@@ -181,37 +181,12 @@ question: |
 fields:
   - County: court_county
     code: court_list._load_courts()["address_county"].unique()  
-#question: |
-# What is the name of the Maine county where the court is located?:
-#field: court_county
-#dropdown: 
-#  - "Androscoggin"
-#  - "Aroostook"
-#  - "Cumberland"
-#  - "Franklin"
-# - "Hancock"
-#  - "Kennebec"
-#  - "Knox"
-#  - "Lincoln"
-#  - "Oxford"
-#  - "Penobscot"
-#  - "Piscataquis" 
-#  - "Sagadahaoc"
-#  - "Somerset"
-#  - "Waldo"
-#  - "Washington"
-#  - "York"
 ---
 id: Court location town
 question: |
 fields:  
   - What is the name of the town where the court is located?: court_town
     code: court_list._load_courts()["address_town"].unique()
-    #maxlength: 21
-#question: |
-#fields:
-# - "Which town is the court in?": court_town
-#   maxlength: 21
 ---
 id: Fee waiver support
 question: |
@@ -223,8 +198,6 @@ fields:
 id: Affidavit support
 question: |
 fields:
-#  - "Are you using this form for another reason?": support_other
-#    datatype: yesno
   - "Why are you filing this form with the court?": support_other_text
     maxlength: 78
 ---
@@ -244,8 +217,6 @@ fields:
     maxlength: 87
   - "Work Telephone": user_work_number
     datatype: number
-#  - "Are you employed?": user_is_employed
-#    datatype: yesno
 ---
 id: Employment Method of Payment
 question: |
@@ -259,33 +230,6 @@ fields:
   - "What is your gross pay each pay period?": user_gross_pay
     datatype: currency 
     hide if:  user_pay_wages
----
-#id: Wages Collection
-############################
-#Trying to troubleshoot getting the variable assignment to go through correctly with the 'user_hours_worked_' pieces. Tried 'type' as I did with courts, but can't quite seem to make it work that way just yet.
-#############################
-#question: |
-#  Tell us about your wages
-#fields:
-#  - "What schedule are you paid on?": user_hours_worked_type
-#    choices:
-#      Weekly: weekly
-#      Every Two Weeks: biweekly
-#      Monthly: monthly
-#      Other: other
-#  - Other Pay Schedule: user_hours_worked_other_term
-#    show if: 
-#      variable: user_hours_worked_type
-#      is: user_hours_worked_other
-#  - How many hours do you work in each pay period?: user_hours_worked
-#    datatype: number
----
-#mandatory: True
-#code: |
-#    if user_pay_salary == True:
-#      user_gross_pay
-#    else:
-#      user_hourly_wage
 ---
 id: Salary Pay Period
 question: |
@@ -394,6 +338,7 @@ fields:
     show if: asset_owed_money
     datatype: currency
     min: 0
+### Note to Jack - need to work out how to ask this question since not intending for this fin. aff. to be used separately at this time. Form mentions that it must be '1st party' bail.
 #  - "Cash Bail you have paid in this case": asset_cash_bail
 #    show if:
 #      variable: court_type
@@ -560,7 +505,9 @@ fields:
       - A friend: user_lives_with_friend
       - Your parent(s): user_lives_with_parent
       - Another person or people: user_lives_with_other
-    show if: user_household_children_plus_adults  
+    show if: 
+      variable: user_household_children_plus_adults
+      is: True
   - "Who do you live with? (How are you related, i.e. 'roommate,' 'grandparent,' or 'dating partner')": user_lives_with_other_text  
     show if: 
       variable: user_housemate_selection["user_lives_with_other"]
@@ -1373,7 +1320,7 @@ attachment:
       - "child_support_paid_monthly": ${ child_support_schedule == "child_support_paid_monthly" }
       - "child_support_paid_other_schedule": ${ child_support_schedule == "child_support_paid_other_schedule" }
       - "user_lives_alone": ${ user_lives_alone }
-      - "user_lives_with_someone": ${ user_lives_alone == False or user_household_children_plus_adults == True }
+      - "user_lives_with_someone": ${ user_household_children_plus_adults == True }
       - "user_lives_with_spouse": ${ user_housemate_selection["user_lives_with_spouse"] == True }
       - "user_lives_with_friend": ${ user_housemate_selection["user_lives_with_friend"] == True }
       - "user_lives_with_parent": ${ user_housemate_selection["user_lives_with_parent"] == True }
