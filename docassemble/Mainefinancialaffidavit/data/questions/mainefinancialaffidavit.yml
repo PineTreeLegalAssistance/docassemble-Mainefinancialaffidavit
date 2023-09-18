@@ -87,9 +87,9 @@ code: |
   court_town
   #courts[0].address.address
   docket_number
-  support_fee_waiver
-  if support_fee_waiver == False:
-    support_other_text  
+  #support_fee_waiver
+  #if support_fee_waiver == False:
+    #support_other_text  
   plaintiffs.gather()
   set_progress(16)
   defendants.gather()
@@ -192,6 +192,7 @@ id: Fee waiver support
 question: |
 fields:
   - "Are you using this form with your Application to Proceed Without Payment of Fees (fee waiver)?": support_fee_waiver
+    #code: support_fee_waiver = True
     datatype: yesnoradio
     
 ---
@@ -1227,8 +1228,8 @@ attachment:
       - "defendants1_name": ${ defendants[1] }
       - "user_name": ${ users[0] }
       - "support_fee_waiver": ${ support_fee_waiver }
-      - "support_other_text": ${ support_other_text }
-      - "support_other": ${ support_fee_waiver == False }
+      #- "support_other_text": ${ support_other_text }
+      #- "support_other": ${ support_fee_waiver == False }
       - "user_address_on_one_line": ${ users[0].address.on_one_line() }
       - "users_birthdate": ${ users[0].birthdate.format() }
       - "user_phone_number": ${ users[0].phone_number }
