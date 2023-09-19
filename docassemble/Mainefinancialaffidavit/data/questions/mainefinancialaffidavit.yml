@@ -87,7 +87,7 @@ code: |
   court_town
   #courts[0].address.address
   docket_number
-  #support_fee_waiver
+  support_fee_waiver
   #if support_fee_waiver == False:
     #support_other_text  
   plaintiffs.gather()
@@ -188,19 +188,23 @@ fields:
   - What is the name of the town where the court is located?: court_town
     code: court_list._load_courts()["address_town"].unique()
 ---
-id: Fee waiver support
-question: |
-fields:
-  - "Are you using this form with your Application to Proceed Without Payment of Fees (fee waiver)?": support_fee_waiver
+id: Fee waiver support set
+code: support_fee_waiver = True
+---
+
+#id: Fee waiver support
+#question: |
+#fields:
+#  - "Are you using this form with your Application to Proceed Without Payment of Fees (fee waiver)?": #support_fee_waiver
     #code: support_fee_waiver = True
-    datatype: yesnoradio
+#    datatype: yesnoradio
     
 ---
-id: Affidavit support
-question: |
-fields:
-  - "Why are you filing this form with the court?": support_other_text
-    maxlength: 78
+#id: Affidavit support
+#question: |
+#fields:
+#  - "Why are you filing this form with the court?": support_other_text
+#    maxlength: 78
 ---
 id: Employment Status
 question: |
