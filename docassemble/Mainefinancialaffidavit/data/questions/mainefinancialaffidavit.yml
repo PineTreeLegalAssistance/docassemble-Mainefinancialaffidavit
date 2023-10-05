@@ -83,7 +83,7 @@ code: |
   user_ask_role
   #Introduction
   #court_type
-  court_county
+  #court_county
   court_town
   #courts[0].address.address
   docket_number
@@ -175,12 +175,12 @@ fields:
       - Superior: superior
       - Criminal: criminal
 ---
-id: Court location county
-question: |
-  What is the name of the Maine county where the court is located?
-fields:
-  - County: court_county
-    code: court_list._load_courts()["address_county"].unique()  
+#id: Court location county
+#question: |
+#  What is the name of the Maine county where the court is located?
+#fields:
+#  - County: court_county
+#    code: court_list._load_courts()["address_county"].unique()  
 ---
 id: Court location town
 question: |
