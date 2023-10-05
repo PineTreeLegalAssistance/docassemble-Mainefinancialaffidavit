@@ -244,7 +244,7 @@ fields:
     input type: radio
     choices:
       - Weekly: user_salary_paid_weekly
-      - Biweekly: user_salary_paid_biweekly
+      - Biweekly (once every two weeks): user_salary_paid_biweekly
       - Monthly: user_salary_paid_monthly
       - Other: user_salary_paid_other
   - Payment schedule: user_salary_paid_other_term
@@ -263,7 +263,7 @@ fields:
     input type: radio
     choices:
       - Weekly: user_hours_worked_weekly
-      - Biweekly: user_hours_worked_biweekly
+      - Biweekly (once every two weeks): user_hours_worked_biweekly
       - Monthly: user_hours_worked_monthly
       - Other: user_hours_worked_other
   - Payment schedule: user_hours_worked_other_term
@@ -287,6 +287,7 @@ question: |
 fields:
   - Which benefits do you get?: user_benefits_selection
     datatype: checkboxes
+    none of the above: False 
     choices:
       - Unemployment: benefits_unemployment
       - Social Security: benefits_social_security
@@ -341,6 +342,12 @@ fields:
     datatype: yesnoradio
   - "How much money are you owed?": asset_owed_money_amount
     show if: asset_owed_money
+    datatype: currency
+    min: 0
+  - "Have you paid any cash bail for yourself in a criminal case that is still ongoing?": asset_cash_bail
+    datatype: yesnoradio
+  - "How much cash bail did you pay?": asset_cash_bail_amount
+    show if: asset_cash_bail
     datatype: currency
     min: 0
 ### Note to Jack - need to work out how to ask this question since not intending for this fin. aff. to be used separately at this time. Form mentions that it must be '1st party' bail.
@@ -399,9 +406,9 @@ fields:
     datatype: currency
     min: 0
 ---
-id: Expenses
+id: Expenses - Housing
 question: |
-  Expenses
+ Housing Expenses
 subquestion: |
   About regular costs you may have to pay
 fields:
@@ -416,16 +423,7 @@ fields:
   - "Monthly rent amount": expense_rent_amount
     show if: expense_rent
     datatype: currency
-    min: 0
-  - "Do you pay child support?": expense_child_support
-    datatype: yesnoradio
-  - "Monthly child support amount": expense_child_support_amount
-    show if: expense_child_support
-    datatype: currency
-    min: 0
-    help: |  
-      Please enter the total amount of child support you pay each month, for all children combined. We will ask for more details later in this interview.
-#The way to more eleganty handle this child support question may be to have the 'Do you pay' question trigger the  child support details screen - and then calculate the monthly child support amount for the 'expense_child_support_amount' field - that way we only have to ask the user for how much and how often they pay, and not to have to try to reconcile the monthly/by period math all on their own.      
+    min: 0     
   - "Do you pay utilities?": expense_utilities
     datatype: yesnoradio
   - "Monthly utilities amount": expense_utilities_amount
@@ -438,12 +436,34 @@ fields:
     show if: expense_food
     datatype: currency
     min: 0
+  - "Heating costs?": expense_heat
+    datatype: yesnoradio
+  - "Monthly heating costs": expense_heat_amount
+    show if: expense_heat
+    datatype: currency
+    min: 0 
   - "Cable costs?": expense_cable
     datatype: yesnoradio
   - "Monthly cable costs": expense_cable_amount
     show if: expense_cable
     datatype: currency
+    min: 0    
+---
+id: Expenses - Other
+question: |
+  Other Expenses
+subquestion: |
+  More about regular costs you have to you
+fields:
+  - "Do you pay child support?": expense_child_support
+    datatype: yesnoradio
+  - "Monthly child support amount": expense_child_support_amount
+    show if: expense_child_support
+    datatype: currency
     min: 0
+    help: |  
+      Please enter the total amount of child support you pay each month, for all children combined. We will ask for more details later in this interview.
+#The way to more eleganty handle this child support question may be to have the 'Do you pay' question trigger the  child support details screen - and then calculate the monthly child support amount for the 'expense_child_support_amount' field - that way we only have to ask the user for how much and how often they pay, and not to have to try to reconcile the monthly/by period math all on their own. 
   - "Credit card payments?": expense_credit_card
     datatype: yesnoradio
   - "Monthly credit card payments": expense_credit_card_amount
@@ -455,13 +475,7 @@ fields:
   - "Monthly loan payments": expense_loans_amount
     show if: expense_loans
     datatype: currency
-    min: 0
-  - "Heating costs?": expense_heat
-    datatype: yesnoradio
-  - "Monthly heating costs": expense_heat_amount
-    show if: expense_heat
-    datatype: currency
-    min: 0
+    min: 0    
   - "Cell phone costs?": expense_cell_phone
     datatype: yesnoradio
   - "Monthly cell phone costs": expense_cell_phone_amount
@@ -582,10 +596,10 @@ fields:
     datatype: yesno
   - note: |
       I have read the above form, I understand it, and the answers to the questions are true. I understand and agree that further investigation may be conducted, if necessary, to verify the information that I have provided. I also understand that I have a continuing obligation, personally and through counsel, to report to the court any changes in my employment or other financial circumstances.
-  - "I understand and swear that the statements on my Financial Affidavit are true and correct": truthfulness_check
+  - "I swear under penalty of perjury that the above statements are true and correct. I understand that these statements are made for use as evidence in court and that I am subject to prosecution for perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false information to the court.": truthfulness_check
     datatype: yesno
-  - note: |
-      I swear under penalty of perjury that the above statements are true and correct. I understand that these statements are made for use as evidence in court and that I am subject to prosecution for perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false information to the court.
+#  - note: |
+#      I swear under penalty of perjury that the above statements are true and correct. I understand #that these statements are made for use as evidence in court and that I am subject to prosecution for #perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false #information to the court.
 ---
 id: preview mainefinancialaffidavit
 question: |
