@@ -1,7 +1,8 @@
 ---
 include:
   - docassemble.AssemblyLine:assembly_line.yml
-  - ptla_custom_organization.yml
+  - custom_ptla_theme_ngb.yml
+  #- ptla_custom_organization.yml
 ---
 metadata:
   title: |
