@@ -596,11 +596,11 @@ fields:
   - "I understand and agree to the Financial Affidavit form terms": acknowledge_form_terms
     datatype: yesno
   - note: |
-      I have read the above form, I understand it, and the answers to the questions are true. I understand and agree that further investigation may be conducted, if necessary, to verify the information that I have provided. I also understand that I have a continuing obligation, personally and through counsel, to report to the court any changes in my employment or other financial circumstances.
-  - "I swear under penalty of perjury that the above statements are true and correct. I understand that these statements are made for use as evidence in court and that I am subject to prosecution for perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false information to the court.": truthfulness_check
+      By checking the box above, you are agreeing that: "I have read the above form, I understand it, and the answers to the questions are true. I understand and agree that further investigation may be conducted, if necessary, to verify the information that I have provided. I also understand that I have a continuing obligation, personally and through counsel, to report to the court any changes in my employment or other financial circumstances."
+  - "I swear under penalty of perjury that the statements on this form are true and correct.": truthfulness_check
     datatype: yesno
-#  - note: |
-#      I swear under penalty of perjury that the above statements are true and correct. I understand #that these statements are made for use as evidence in court and that I am subject to prosecution for #perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false #information to the court.
+  - note: |
+      By checking the box above, you are agreeing that: "I swear under penalty of perjury that the above statements are true and correct. I understand that these statements are made for use as evidence in court and that I am subject to prosecution for perjury punishable by up to 5 years in prison and a fine of up to $5,000.00 if I give false information to the court."
 ---
 id: preview mainefinancialaffidavit
 question: |
